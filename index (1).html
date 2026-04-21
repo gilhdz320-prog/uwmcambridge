@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UWM Cambridge — Athlete Nutrition Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8A84B;
+    --gold-light: #E8C96A;
+    --navy: #0D1B2A;
+    --navy-mid: #162338;
+    --navy-light: #1E3050;
+    --white: #F5F2EC;
+    --gray: #8A8F96;
+    --gray-light: #BFC3C8;
+    --accent: #4A9EBF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 60px;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--gray-light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 5vw 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(200,168,75,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(74,158,191,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 110px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    font-weight: 300; line-height: 1.65;
+    color: var(--gray-light);
+    max-width: 520px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-cta-group {
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-primary .arrow { font-size: 16px; transition: transform 0.2s; }
+  .btn-primary:hover .arrow { transform: translateX(3px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--gray-light);
+    font-size: 13px; font-weight: 400;
+    padding: 13px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 64px;
+    opacity: 0; animation: fadeUp 0.7s 0.65s forwards;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 36px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; color: var(--gold); line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--gray); margin-top: 4px; letter-spacing: 0.05em; }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 5vw; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 0.03em; line-height: 1;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 15px; font-weight: 300; color: var(--gray-light);
+    max-width: 540px; line-height: 1.7; margin-bottom: 44px;
+  }
+
+  /* ── CALCULATOR FEATURE ── */
+  .calc-feature {
+    background: var(--navy-mid);
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 12px;
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .calc-feature::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,168,75,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .calc-badge {
+    display: inline-block;
+    background: rgba(200,168,75,0.12);
+    border: 1px solid rgba(200,168,75,0.3);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .calc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px; line-height: 1; letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+  .calc-title em { color: var(--gold); font-style: normal; }
+  .calc-desc {
+    font-size: 15px; font-weight: 300; color: var(--gray-light);
+    line-height: 1.7; margin-bottom: 28px;
+  }
+  .calc-features-list { list-style: none; margin-bottom: 32px; }
+  .calc-features-list li {
+    font-size: 13px; color: var(--gray-light);
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .calc-features-list li::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--gold); flex-shrink: 0;
+  }
+  .calc-visual {
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .calc-visual-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; color: var(--gray);
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .macro-bar-row { margin-bottom: 16px; }
+  .macro-bar-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .macro-name { font-size: 12px; font-weight: 500; letter-spacing: 0.05em; }
+  .macro-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray); }
+  .macro-track {
+    height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden;
+  }
+  .macro-fill { height: 100%; border-radius: 3px; }
+  .fill-p { background: var(--gold); width: 25%; }
+  .fill-c { background: var(--accent); width: 50%; }
+  .fill-f { background: #9B7FD4; width: 25%; }
+  .calc-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 20px 0; }
+  .calc-result-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .result-label { font-size: 12px; color: var(--gray); }
+  .result-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--gold); letter-spacing: 0.05em;
+  }
+  .result-unit { font-size: 11px; color: var(--gray); margin-left: 3px; }
+
+  /* ── RESOURCES GRID ── */
+  .resources-bg { background: var(--navy-mid); }
+  .sport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .resource-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 24px;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .resource-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .resource-card:hover { border-color: rgba(200,168,75,0.3); transform: translateY(-2px); }
+  .resource-card:hover::after { opacity: 1; }
+  .resource-icon { font-size: 22px; }
+  .resource-sport {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .resource-title {
+    font-size: 15px; font-weight: 500; color: var(--white); line-height: 1.3;
+  }
+  .resource-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .resource-arrow {
+    margin-top: auto; font-size: 12px; color: var(--gold);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .resource-card:hover .resource-arrow { opacity: 1; }
+
+  /* ── TOPICS SECTION ── */
+  .topics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-top: 0;
+  }
+  .topic-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 24px;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .topic-card:hover { border-color: rgba(74,158,191,0.4); transform: translateY(-2px); }
+  .topic-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .topic-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+  .topic-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .topic-link { font-size: 12px; color: var(--accent); margin-top: 12px; display: block; }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center;
+  }
+  .about-text p {
+    font-size: 15px; font-weight: 300; color: var(--gray-light);
+    line-height: 1.8; margin-bottom: 16px;
+  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+  .about-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(200,168,75,0.15);
+    border-radius: 12px; padding: 32px;
+  }
+  .about-card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 0.05em;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .about-card-title { font-size: 13px; color: var(--gray); margin-bottom: 20px; }
+  .about-card-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 20px 0; }
+  .about-card-row {
+    display: flex; justify-content: space-between;
+    font-size: 12px; padding: 6px 0;
+  }
+  .about-card-row span:first-child { color: var(--gray); }
+  .about-card-row span:last-child { color: var(--white); font-weight: 500; }
+  .about-citation {
+    background: rgba(200,168,75,0.06);
+    border-left: 2px solid var(--gold);
+    padding: 12px 16px; margin-top: 20px;
+    font-size: 11px; color: var(--gray); line-height: 1.6;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080F18;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 36px 5vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 0.1em; color: var(--gold);
+  }
+  .footer-text { font-size: 12px; color: var(--gray); }
+  .footer-email { font-size: 12px; color: var(--accent); }
+  .disclaimer {
+    background: #080F18;
+    padding: 0 5vw 24px;
+    font-size: 11px; color: rgba(138,143,150,0.6); line-height: 1.6;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 80px 20px 48px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .calc-feature { grid-template-columns: 1fr; padding: 28px; gap: 28px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .topics-grid { grid-template-columns: 1fr; }
+    section { padding: 56px 20px; }
+    footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+    .disclaimer { padding: 0 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">UWM <span>Cambridge</span></a>
+  <div class="nav-links">
+    <a href="#calculator">Calculator</a>
+    <a href="#sports">By Sport</a>
+    <a href="#topics">Topics</a>
+    <a href="#about">About</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-eyebrow">UWM Cambridge Commons · Nutritional Sciences · 2026</p>
+  <h1 class="hero-title">FUEL<br><em>SMARTER.</em><br>PERFORM<br>BETTER.</h1>
+  <p class="hero-sub">Science-based nutrition tools built specifically for UWM student-athletes. Get your personalized macro plan and learn how to navigate Cambridge Commons like a pro.</p>
+  <div class="hero-cta-group">
+    <a href="https://docs.google.com/spreadsheets/d/1QspEWkFqkbyw1gl3fiRM6ivmuAC1Pa-G-31u_SGyrlY/copy" class="btn-primary" target="_blank">
+      Get Your Free Nutrition Plan <span class="arrow">→</span>
+    </a>
+    <a href="#sports" class="btn-secondary">Explore Guides ↓</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">9+</div>
+      <div class="stat-label">Sport & Topic Guides</div>
+    </div>
+    <div>
+      <div class="stat-num">7</div>
+      <div class="stat-label">Macro Targets by Sport</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Evidence-Based</div>
+    </div>
+    <div>
+      <div class="stat-num">Free</div>
+      <div class="stat-label">For All UWM Athletes</div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR FEATURE -->
+<section id="calculator" style="padding: 80px 5vw; background: var(--navy);">
+  <p class="section-label">Featured Tool</p>
+  <div class="calc-feature">
+    <div>
+      <span class="calc-badge">✦ Science-Based Calculator</span>
+      <h2 class="calc-title">YOUR PERSONALIZED <em>MACRO</em> PLAN</h2>
+      <p class="calc-desc">Enter your weight, height, age, and sport — get your exact daily calorie and macronutrient targets, a cafeteria smart-choice guide, weekly tracker, recovery calculator, and more. Built on Mifflin-St Jeor and ACSM guidelines.</p>
+      <ul class="calc-features-list">
+        <li>Personalized calorie & macro targets by sport</li>
+        <li>Cambridge Commons cafeteria smart-choice guide</li>
+        <li>Visual hand portion guide</li>
+        <li>7-day weekly nutrition tracker with traffic-light feedback</li>
+        <li>Post-workout recovery calculator (ISSN guidelines)</li>
+        <li>USDA food composition database for 25 cafeteria foods</li>
+      </ul>
+      <a href="https://docs.google.com/spreadsheets/d/1QspEWkFqkbyw1gl3fiRM6ivmuAC1Pa-G-31u_SGyrlY/copy" class="btn-primary" target="_blank" style="width: fit-content;">
+        Open Calculator <span class="arrow">→</span>
+      </a>
+    </div>
+    <div class="calc-visual">
+      <p class="calc-visual-label">Sample Output — 85 kg athlete, Moderate surplus</p>
+      <div class="macro-bar-row">
+        <div class="macro-bar-header">
+          <span class="macro-name" style="color: var(--gold);">Protein</span>
+          <span class="macro-val">195 g · 25%</span>
+        </div>
+        <div class="macro-track"><div class="macro-fill fill-p"></div></div>
+      </div>
+      <div class="macro-bar-row">
+        <div class="macro-bar-header">
+          <span class="macro-name" style="color: var(--accent);">Carbohydrates</span>
+          <span class="macro-val">488 g · 50%</span>
+        </div>
+        <div class="macro-track"><div class="macro-fill fill-c"></div></div>
+      </div>
+      <div class="macro-bar-row">
+        <div class="macro-bar-header">
+          <span class="macro-name" style="color: #9B7FD4;">Fats</span>
+          <span class="macro-val">97 g · 25%</span>
+        </div>
+        <div class="macro-track"><div class="macro-fill fill-f"></div></div>
+      </div>
+      <div class="calc-divider"></div>
+      <div class="calc-result-row">
+        <span class="result-label">Maintenance calories</span>
+        <span><span class="result-val">3,506</span><span class="result-unit">kcal/day</span></span>
+      </div>
+      <div class="calc-result-row" style="margin-top:8px">
+        <span class="result-label">Adjusted goal (moderate surplus)</span>
+        <span><span class="result-val">3,906</span><span class="result-unit">kcal/day</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPORT GUIDES -->
+<section class="resources-bg" id="sports">
+  <p class="section-label">By Sport</p>
+  <h2 class="section-title">GUIDES FOR<br>YOUR SPORT</h2>
+  <p class="section-sub">Evidence-based nutrition strategies tailored to your training demands — from basketball to endurance running.</p>
+  <div class="sport-grid">
+    <a href="https://drive.google.com/file/d/1JqKlo1LLa5WTF9mJ-AkFUwUNnE6_IHDl/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">🏀</span>
+      <span class="resource-sport">Basketball · Volleyball</span>
+      <span class="resource-title">Basketball & Volleyball Nutrition</span>
+      <span class="resource-desc">Fueling for explosive, intermittent-sprint sports. Pre-game meals, halftime snacks, and recovery strategies.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1aLTvZA4MP-KsoAbxiey-P5bQdlQaiE8h/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">⚽</span>
+      <span class="resource-sport">Soccer</span>
+      <span class="resource-title">Nutrition for Soccer Athletes</span>
+      <span class="resource-desc">High-intensity carb strategies for 90-minute match performance. Hydration, cramp prevention, and tournament fueling.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1rQEYpGYH-VCmz1Zj_yIvZ2_3qLo_9qvO/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">🏊</span>
+      <span class="resource-sport">Swimming · Track · Marathon</span>
+      <span class="resource-title">Swimming, Track & Marathon Guide</span>
+      <span class="resource-desc">Endurance-specific carb loading, electrolyte management, and high-volume training nutrition periodization.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/13agwajbYMjCswmKv_wSXzl3K5eY-SMyj/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">🏈</span>
+      <span class="resource-sport">Football</span>
+      <span class="resource-title">Football Nutrition Guide</span>
+      <span class="resource-desc">High-protein strategies for strength and mass. Two-a-day training nutrition and recovery for contact sport athletes.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/14QQE2JdV6-W2ej8dzl8G15wrs74G-NGV/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">🐾</span>
+      <span class="resource-sport">All Sports · Foundation</span>
+      <span class="resource-title">Panther Fueling Blueprint</span>
+      <span class="resource-desc">The complete Cambridge Commons navigation guide. How to build a performance plate at every dining station.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1oyoCLmJmneDqVXaF-7Ds0IdSvZopXCdM/view?usp=sharing" class="resource-card" target="_blank">
+      <span class="resource-icon">⚡</span>
+      <span class="resource-sport">All Sports · Timing</span>
+      <span class="resource-title">Pre-Workout Nutrition Guide</span>
+      <span class="resource-desc">What to eat and when before training. Timing windows, food choices, and portion sizes for peak performance.</span>
+      <span class="resource-arrow">Open guide →</span>
+    </a>
+  </div>
+</section>
+
+<!-- TOPIC GUIDES -->
+<section id="topics" style="background: var(--navy);">
+  <p class="section-label">By Topic</p>
+  <h2 class="section-title">SPECIALIZED<br>NUTRITION TOPICS</h2>
+  <p class="section-sub">Deep dives into the nutritional topics that matter most for UWM student-athletes.</p>
+  <div class="topics-grid">
+    <a href="https://drive.google.com/file/d/1bsJkJZQqUso1fUO1sQvZWcfO8rpkiJ-f/view?usp=sharing" class="topic-card" target="_blank">
+      <span class="topic-icon">🩸</span>
+      <span class="topic-title">Iron Essentials for Female Athletes</span>
+      <span class="topic-desc">Iron deficiency is the most common nutrient deficiency in female athletes. Learn your targets, best food sources, and absorption tips.</span>
+      <span class="topic-link">Read guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1pV1cF3ELrYqTVNJARQIT102J8yZEnWqV/view?usp=sharing" class="topic-card" target="_blank">
+      <span class="topic-icon">🌱</span>
+      <span class="topic-title">Performance for Plant-Based Athletes</span>
+      <span class="topic-desc">How to meet protein, B12, iron, and omega-3 targets on a plant-based diet — with Cambridge Commons options.</span>
+      <span class="topic-link">Read guide →</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1Opd-2NamJyynYO13oHfNKgC5dmM5GdNe/view?usp=sharing" class="topic-card" target="_blank">
+      <span class="topic-icon">📚</span>
+      <span class="topic-title">Evidence Behind the Guidelines</span>
+      <span class="topic-desc">The peer-reviewed research behind every recommendation in this project. Sources, citations, and methodology explained.</span>
+      <span class="topic-link">Read guide →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="resources-bg" id="about">
+  <p class="section-label">About this project</p>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title" style="margin-bottom: 24px;">BUILT FOR<br>PANTHERS,<br>BY A PANTHER</h2>
+      <p>This resource was created as a <strong>Service Learning capstone project</strong> for UWM's Nutritional Sciences program. The goal: give UWM student-athletes free, evidence-based nutrition tools designed around the real food available at Cambridge Commons.</p>
+      <p>Every recommendation in this project is derived from <strong>peer-reviewed research</strong> — Mifflin-St Jeor (1990) for calorie estimation, ACSM/AND/DC (2016) for macronutrient targets, ISSN (2017) for recovery nutrition, and USDA FoodData Central (2023) for food composition data.</p>
+      <p>This is not generic nutrition advice. It's built for the specific context of being a student-athlete eating at Cambridge Commons — the real dining stations, the real food options, the real schedule constraints.</p>
+      <div class="about-citation">
+        Disclaimer: This tool provides estimates for educational purposes. Nutritional needs vary. Consult a Registered Dietitian Nutritionist (RDN) before significant dietary changes.
+      </div>
+    </div>
+    <div>
+      <div class="about-card">
+        <div class="about-card-name">GILBERT HERNANDEZ</div>
+        <div class="about-card-title">Senior Student · UWM Nutritional Sciences</div>
+        <div class="about-card-divider"></div>
+        <div class="about-card-row"><span>Program</span><span>Nutritional Sciences</span></div>
+        <div class="about-card-row"><span>University</span><span>UW–Milwaukee</span></div>
+        <div class="about-card-row"><span>Project type</span><span>Service Learning Capstone</span></div>
+        <div class="about-card-row"><span>Year</span><span>2026</span></div>
+        <div class="about-card-row"><span>Dining hall</span><span>Cambridge Commons</span></div>
+        <div class="about-card-divider"></div>
+        <div class="about-card-row"><span>Contact</span><span style="color: var(--accent);">herna946@uwm.edu</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">UWM Cambridge</div>
+  <div style="text-align: center;">
+    <div class="footer-text">Gilbert Hernandez · UWM Nutritional Sciences · Capstone Project 2026</div>
+    <div class="footer-text" style="margin-top: 4px;">Evidence-based performance fueling for student-athletes at Cambridge Commons</div>
+  </div>
+  <a href="mailto:herna946@uwm.edu" class="footer-email">herna946@uwm.edu</a>
+</footer>
+<div class="disclaimer">
+  ⚠ This website provides nutrition information for educational purposes only. It is not intended to diagnose, treat, cure, or prevent any health condition. Consult a Registered Dietitian Nutritionist (RDN) or physician before making significant dietary changes. All calorie and macronutrient values are estimates based on validated equations and population averages.
+</div>
+
+</body>
+</html>
